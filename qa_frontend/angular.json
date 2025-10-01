@@ -36,7 +36,10 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "app:build"
+            "browserTarget": "app:build",
+            "allowedHosts": [
+              "vscode-internal-13823-beta.beta01.cloud.kavia.ai"
+            ]
           },
           "configurations": {
             "production": { "browserTarget": "app:build:production" }
