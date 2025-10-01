@@ -36,11 +36,21 @@ export class WebsocketService {
 
   // PUBLIC_INTERFACE
   /**
-   * Connects to the backend WebSocket endpoint.
+   * Connects to the backend WebSocket endpoint. This method is resilient:
+   * - Skips connection if URL is missing or a placeholder.
+   * - Catches and reports errors without breaking app rendering.
    */
   connect(): void {
     try {
-      this.socket = new WebSocket(this.url);
+      const url = (this.url || '').trim();
+      // Guard against empty/placeholder URLs to avoid runtime errors in preview envs.
+      if (!url || url.includes('example.com')) {
+        // Emit a close-like event so UI can know WS is not active; app continues normally.
+        this._messages$.next({ type: 'close', code: 1000, reason: 'WebSocket URL not configured; skipping connect' });
+        return;
+      }
+
+      this.socket = new WebSocket(url);
       this.socket.addEventListener('open', () => {
         this._messages$.next({ type: 'open' });
       });
@@ -62,10 +72,13 @@ export class WebsocketService {
         this._messages$.next({ type: 'close', code: evt.code, reason: evt.reason });
       });
       this.socket.addEventListener('error', (err) => {
+        // Report error but keep the app rendering normally
         this._messages$.next({ type: 'error', error: err });
       });
     } catch (e) {
       console.error('WS connect failed', e);
+      // Ensure app continues by emitting a close event
+      this._messages$.next({ type: 'close', code: 1006, reason: 'WS connect exception' });
     }
   }
 
