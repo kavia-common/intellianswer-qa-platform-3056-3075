@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: false,\n  // IMPORTANT: Ask user to provide these via .env mapped build system if needed.\n  apiBaseUrl: window.__QA_API_BASE_URL__ ?? \"http://localhost:8080/api\",\n  wsUrl: window.__QA_WS_URL__ ?? \"ws://localhost:8080/ws\"\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

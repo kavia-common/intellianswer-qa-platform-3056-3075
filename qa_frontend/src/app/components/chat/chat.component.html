@@ -1,0 +1,34 @@
+<div class="chat-wrap card">
+  <div class="messages" id="messages">
+    <div *ngFor="let m of messages" class="msg" [ngClass]="m.role">
+      <div class="bubble">
+        <div class="role" *ngIf="m.role !== 'user'">
+          <span *ngIf="m.role === 'assistant'">Assistant</span>
+          <span *ngIf="m.role === 'system'">System</span>
+        </div>
+        <div class="content">{{ m.content }}</div>
+        <div class="typing" *ngIf="m.pending">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form class="composer" (ngSubmit)="submit()">
+    <input
+      class="input"
+      type="text"
+      placeholder="Ask a question..."
+      [formControl]="form.controls['question']"
+      [disabled]="sending"
+      aria-label="Question input"
+    />
+    <button type="submit" class="btn btn-primary" [disabled]="sending || form.invalid">
+      {{ sending ? 'Sending...' : 'Send' }}
+    </button>
+  </form>
+
+  <div class="hint">
+    Tips: Use specific context for better answers. You can also connect to a WebSocket backend for streaming replies.
+  </div>
+</div>

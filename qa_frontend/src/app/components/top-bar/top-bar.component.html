@@ -1,0 +1,26 @@
+<div class="topbar-wrap">
+  <div class="brand">
+    <div class="logo">IA</div>
+    <div class="title">
+      <strong>IntelliAnswer</strong>
+      <span class="badge">Ocean Professional</span>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-ghost" title="Notifications">
+      🔔
+    </button>
+    <button class="btn btn-ghost" title="Settings">
+      ⚙️
+    </button>
+    <div class="user" (click)="toggleMenu()">
+      <div class="avatar">{{ userInitials }}</div>
+      <span class="name">Jane Doe</span>
+    </div>
+  </div>
+</div>
+<div class="menu" *ngIf="showMenu">
+  <a href="#" (click)="$event.preventDefault()">Profile</a>
+  <a href="#" (click)="$event.preventDefault()">Preferences</a>
+  <a href="#" (click)="$event.preventDefault()">Sign out</a>
+</div>

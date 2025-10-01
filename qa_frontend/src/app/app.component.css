@@ -1,0 +1,6 @@
+.sidebar, .topbar {
+  box-shadow: var(--shadow-sm);
+}
+.main {
+  background: transparent;
+}
